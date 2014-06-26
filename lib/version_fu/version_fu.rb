@@ -101,9 +101,12 @@ module VersionFu
       versioned_columns.each do |attribute|
         new_version.__send__ "#{attribute}=", __send__(attribute)
       end
-      version_number = new_record? ? 1 : version + 1
-      new_version.version = version_number
+      new_version.version = next_version
       self.version = version_number
+    end
+
+    def next_version
+      new_record? ? 1 : version + 1
     end
   end
 end
